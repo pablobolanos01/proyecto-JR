@@ -1,0 +1,205 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\unity\\trabajo_dd2d\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\menus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\menus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|d:\\unity\\trabajo_dd2d\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\proto_memoria.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\proto_memoria.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\playermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\gunscriptenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gunscriptenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\gunscriptplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gunscriptplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\enemymain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemymain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\bulletcollogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bulletcollogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\scripts\\fx\\parallax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fx\\parallax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|D:\\unity\\trabajo_dd2d\\assets\\creditos.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F43A152F-82B0-94AB-BC1D-B51DC4CAC9B4}|Assembly-CSharp.csproj|solutionrelative:assets\\creditos.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "creditos.txt",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\creditos.txt",
+              "RelativeDocumentMoniker": "Assets\\creditos.txt",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\creditos.txt",
+              "RelativeToolTip": "Assets\\creditos.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-01-12T19:25:33.498Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "proto_memoria.txt",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\proto_memoria.txt",
+              "RelativeDocumentMoniker": "Assets\\proto_memoria.txt",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\proto_memoria.txt",
+              "RelativeToolTip": "Assets\\proto_memoria.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-01-12T17:05:32.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "menus.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\menus.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\menus.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\menus.cs",
+              "RelativeToolTip": "Assets\\Scripts\\menus.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA/wB4AAACPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T16:16:03.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "parallax.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\fx\\parallax.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\fx\\parallax.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\fx\\parallax.cs",
+              "RelativeToolTip": "Assets\\Scripts\\fx\\parallax.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T16:03:41.019Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GunScriptEnemy.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\GunScriptEnemy.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GunScriptEnemy.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\GunScriptEnemy.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GunScriptEnemy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAACgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T20:34:19.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GunScriptPlayer.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\GunScriptPlayer.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GunScriptPlayer.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\GunScriptPlayer.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GunScriptPlayer.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAywCMAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T20:31:07.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EnemyMain.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\EnemyMain.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMain.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\EnemyMain.cs",
+              "RelativeToolTip": "Assets\\Scripts\\EnemyMain.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAYwB4AAABzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T20:17:04.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAFAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T19:44:48.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BulletColLogic.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\BulletColLogic.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BulletColLogic.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\BulletColLogic.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BulletColLogic.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAYwAQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T19:58:54.901Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PlayerMain.cs",
+              "DocumentMoniker": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\PlayerMain.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerMain.cs",
+              "ToolTip": "D:\\unity\\trabajo_dd2d\\Assets\\Scripts\\PlayerMain.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerMain.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAA6wFYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T19:25:31.554Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

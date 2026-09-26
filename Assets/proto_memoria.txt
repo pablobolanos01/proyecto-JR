@@ -1,0 +1,13 @@
+- portada
+- genero: plataformas / shoot em up
+- objetivo: eliminar a todos los enemigos
+- arte
+- programacion
+	PlayerMain: controles básicos del jugador, movimiento (usando el método del profesor) y código de sus colisiones, incluyendo la función de game over (ejecutada mediante un evento de animación)
+	GunScriptPlayer: código para el arma del jugador. al ser un subobjeto, determina su posición dependiendo de la posición a la que mira el personaje. el script toma un prefab como el objeto que se va a disparar, lo instancia y le aplica una fuerza a la derecha o izquierda según la dirección a la que mire el personaje. ademas el script borra los proyectiles que se hayan separado mucho del personaje sin golpear ningun objetivo.
+	EnemyMain: basado en el script del jugador. el enemigo se mueve automáticamente hacia el jugador siempre que se encuentre a 50 unidades de distancia. decisión de gameplay para que el jugador deba moverse para encontrar a los enemigos. el enemigo se detendrá al estar a menos de 10 unidades de distancia. esto deja espacio para que el jugador pueda disparar ya que no podrá eliminar a los enemigos saltando.
+	GunScriptEnemy: basado en el script del jugador. el enemigo dispara si al generar un número aleatorio entre 0 y 31 (ambos inclusive), este es 0 (en el código aparece un 32 por la forma en que está codificado el generador de números aleatorios de unity)
+	BulletColLogic: usado para que los proyectiles desaparezcan al chocar con el escenario
+	GameManager: controla la interfaz, actualizando datos como la salud del jugador y los puntos. sus variables son estáticas para poder modificarlas desde otros scripts. Además este script se encarga de comprobar si el objetivo del nivel ha sido completado.
+	Menus: controla el comportamiento de los botones en los menús (pantalla de título y créditos). en el botón de salir se ha añadido un comando para detener la ejecución, en caso de que el profesor lo pruebe en el editor (ya que Application.Quit() solo funciona en el juego compilado)
+	Parallax: código usado en clase
