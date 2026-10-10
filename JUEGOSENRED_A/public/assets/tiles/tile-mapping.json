@@ -1,0 +1,302 @@
+[
+    {
+        "unityIndex":  0,
+        "sprite":  "Space Base_190",
+        "frame":  282
+    },
+    {
+        "unityIndex":  1,
+        "sprite":  "Space Base_189",
+        "frame":  281
+    },
+    {
+        "unityIndex":  2,
+        "sprite":  "Space Base_204",
+        "frame":  304
+    },
+    {
+        "unityIndex":  3,
+        "sprite":  "Space Base_203",
+        "frame":  303
+    },
+    {
+        "unityIndex":  4,
+        "sprite":  "Space Base_202",
+        "frame":  302
+    },
+    {
+        "unityIndex":  5,
+        "sprite":  "Space Base_201",
+        "frame":  301
+    },
+    {
+        "unityIndex":  6,
+        "sprite":  "Space Base_130",
+        "frame":  200
+    },
+    {
+        "unityIndex":  7,
+        "sprite":  "Space Base_150",
+        "frame":  220
+    },
+    {
+        "unityIndex":  8,
+        "sprite":  "Space Base_164",
+        "frame":  240
+    },
+    {
+        "unityIndex":  9,
+        "sprite":  "Space Base_176",
+        "frame":  260
+    },
+    {
+        "unityIndex":  10,
+        "sprite":  "Space Base_188",
+        "frame":  280
+    },
+    {
+        "unityIndex":  11,
+        "sprite":  "Space Base_200",
+        "frame":  300
+    },
+    {
+        "unityIndex":  12,
+        "sprite":  "Space Base_191",
+        "frame":  283
+    },
+    {
+        "unityIndex":  13,
+        "sprite":  "Space Base_192",
+        "frame":  284
+    },
+    {
+        "unityIndex":  14,
+        "sprite":  "Space Base_177",
+        "frame":  261
+    },
+    {
+        "unityIndex":  15,
+        "sprite":  "Space Base_178",
+        "frame":  262
+    },
+    {
+        "unityIndex":  16,
+        "sprite":  "Space Base_179",
+        "frame":  263
+    },
+    {
+        "unityIndex":  17,
+        "sprite":  "Space Base_180",
+        "frame":  264
+    },
+    {
+        "unityIndex":  18,
+        "sprite":  "Space Base_165",
+        "frame":  241
+    },
+    {
+        "unityIndex":  19,
+        "sprite":  "Space Base_166",
+        "frame":  242
+    },
+    {
+        "unityIndex":  20,
+        "sprite":  "Space Base_167",
+        "frame":  243
+    },
+    {
+        "unityIndex":  21,
+        "sprite":  "Space Base_168",
+        "frame":  244
+    },
+    {
+        "unityIndex":  22,
+        "sprite":  "Space Base_151",
+        "frame":  221
+    },
+    {
+        "unityIndex":  23,
+        "sprite":  "Space Base_152",
+        "frame":  222
+    },
+    {
+        "unityIndex":  24,
+        "sprite":  "Space Base_153",
+        "frame":  223
+    },
+    {
+        "unityIndex":  25,
+        "sprite":  "Space Base_154",
+        "frame":  224
+    },
+    {
+        "unityIndex":  26,
+        "sprite":  "Space Base_131",
+        "frame":  201
+    },
+    {
+        "unityIndex":  27,
+        "sprite":  "Space Base_132",
+        "frame":  202
+    },
+    {
+        "unityIndex":  28,
+        "sprite":  "Space Base_133",
+        "frame":  203
+    },
+    {
+        "unityIndex":  29,
+        "sprite":  "Space Base_134",
+        "frame":  204
+    },
+    {
+        "unityIndex":  30,
+        "sprite":  "Space Base_234",
+        "frame":  340
+    },
+    {
+        "unityIndex":  31,
+        "sprite":  "Space Base_235",
+        "frame":  341
+    },
+    {
+        "unityIndex":  32,
+        "sprite":  "Space Base_236",
+        "frame":  342
+    },
+    {
+        "unityIndex":  33,
+        "sprite":  "Space Base_237",
+        "frame":  343
+    },
+    {
+        "unityIndex":  34,
+        "sprite":  "Space Base_238",
+        "frame":  344
+    },
+    {
+        "unityIndex":  35,
+        "sprite":  "Space Base_239",
+        "frame":  345
+    },
+    {
+        "unityIndex":  36,
+        "sprite":  "Space Base_216",
+        "frame":  320
+    },
+    {
+        "unityIndex":  37,
+        "sprite":  "Space Base_217",
+        "frame":  321
+    },
+    {
+        "unityIndex":  38,
+        "sprite":  "Space Base_218",
+        "frame":  322
+    },
+    {
+        "unityIndex":  39,
+        "sprite":  "Space Base_219",
+        "frame":  323
+    },
+    {
+        "unityIndex":  40,
+        "sprite":  "Space Base_220",
+        "frame":  324
+    },
+    {
+        "unityIndex":  41,
+        "sprite":  "Space Base_221",
+        "frame":  325
+    },
+    {
+        "unityIndex":  42,
+        "sprite":  "Space Base_244",
+        "frame":  352
+    },
+    {
+        "unityIndex":  43,
+        "sprite":  "Space Base_245",
+        "frame":  353
+    },
+    {
+        "unityIndex":  44,
+        "sprite":  "Space Base_246",
+        "frame":  354
+    },
+    {
+        "unityIndex":  45,
+        "sprite":  "Space Base_247",
+        "frame":  355
+    },
+    {
+        "unityIndex":  46,
+        "sprite":  "Space Base_226",
+        "frame":  332
+    },
+    {
+        "unityIndex":  47,
+        "sprite":  "Space Base_227",
+        "frame":  333
+    },
+    {
+        "unityIndex":  48,
+        "sprite":  "Space Base_228",
+        "frame":  334
+    },
+    {
+        "unityIndex":  49,
+        "sprite":  "Space Base_229",
+        "frame":  335
+    },
+    {
+        "unityIndex":  50,
+        "sprite":  "Space Base_208",
+        "frame":  312
+    },
+    {
+        "unityIndex":  51,
+        "sprite":  "Space Base_209",
+        "frame":  313
+    },
+    {
+        "unityIndex":  52,
+        "sprite":  "Space Base_210",
+        "frame":  314
+    },
+    {
+        "unityIndex":  53,
+        "sprite":  "Space Base_211",
+        "frame":  315
+    },
+    {
+        "unityIndex":  54,
+        "sprite":  "Space Base_196",
+        "frame":  294
+    },
+    {
+        "unityIndex":  55,
+        "sprite":  "Space Base_197",
+        "frame":  295
+    },
+    {
+        "unityIndex":  56,
+        "sprite":  "Space Base_249",
+        "frame":  357
+    },
+    {
+        "unityIndex":  57,
+        "sprite":  "Space Base_248",
+        "frame":  356
+    },
+    {
+        "unityIndex":  58,
+        "sprite":  "Space Base_231",
+        "frame":  337
+    },
+    {
+        "unityIndex":  59,
+        "sprite":  "Space Base_230",
+        "frame":  336
+    }
+]

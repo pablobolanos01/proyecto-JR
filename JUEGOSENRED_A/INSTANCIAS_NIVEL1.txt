@@ -1,0 +1,56 @@
+﻿
+
+Prefab                               X          Y          GUID                            
+------                               -          -          ----                            
+coin.prefab.meta                     63.782185  3.022164   630a29ced11ac794a937625ad78c71f4
+health.prefab.meta                   100.486084 3.6062975  3d10611e9d9d5f94b99ad4401eec709a
+coin.prefab.meta                     121.52673  -1.3653699 630a29ced11ac794a937625ad78c71f4
+health.prefab.meta                   112.15877  10.937022  3d10611e9d9d5f94b99ad4401eec709a
+player.prefab.meta                   -11.22     -0.85      d32057e5edba4294d89de004aab1b94d
+coin.prefab.meta                     65.10728   3.6994338  630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     101.15814  -1.2368828 630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     98.41717   14.659342  630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     69.34757   5.760689   630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     118.899506 -1.3407528 630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     127.02396  11.783314  630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     97.2478    -1.3205562 630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     42.81633   -1.3359199 630a29ced11ac794a937625ad78c71f4
+health.prefab.meta                   32.3669    8.737858   3d10611e9d9d5f94b99ad4401eec709a
+coin.prefab.meta                     66.60905   4.4355965  630a29ced11ac794a937625ad78c71f4
+enemy.prefab.meta                    53.06      -0.86      4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    109.05     8.92       4746434d63eb45d40be2eff9e198a495
+coin.prefab.meta                     45.496     -1.3064711 630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     99.87435   14.697688  630a29ced11ac794a937625ad78c71f4
+enemy.prefab.meta                    117.73     -9.19      4746434d63eb45d40be2eff9e198a495
+Main Camera.prefab.meta              -11.22     -0.85      81a174a46b277ff4aa74b22503ba59c2
+enemy.prefab.meta                    96.77      15.31      4746434d63eb45d40be2eff9e198a495
+coin.prefab.meta                     40.313377  -1.3653665 630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     18.434723  4.641732   630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     20.93      4.72       630a29ced11ac794a937625ad78c71f4
+enemy.prefab.meta                    12.15      -0.63      4746434d63eb45d40be2eff9e198a495
+coin.prefab.meta                     36.91      3.54       630a29ced11ac794a937625ad78c71f4
+Grid.prefab.meta                     0          0          875d8c621fffbc043be5705e2bef212c
+enemy.prefab.meta                    22.97      4.94       4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    103        -9.92      4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    118.95     8.92       4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    74.53      9.53       4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    29.16      9.04       4746434d63eb45d40be2eff9e198a495
+coin.prefab.meta                     99.14303   -1.2576572 630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     125.68181  11.706619  630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     120.29134  -1.3615266 630a29ced11ac794a937625ad78c71f4
+health.prefab.meta                   61.633286  12.74152   3d10611e9d9d5f94b99ad4401eec709a
+parallax-space-backgound.prefab.meta -5.04      2.99       1367c32d2196624409f663fb8ca710ca
+enemy.prefab.meta                    85         4.12       4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    65.09      13         4746434d63eb45d40be2eff9e198a495
+enemy.prefab.meta                    107.5      -1.04      4746434d63eb45d40be2eff9e198a495
+coin.prefab.meta                     124.301315 11.706619  630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     101.29319  14.697688  630a29ced11ac794a937625ad78c71f4
+coin.prefab.meta                     23.4       4.64       630a29ced11ac794a937625ad78c71f4
+enemy.prefab.meta                    128.48     12.51      4746434d63eb45d40be2eff9e198a495
+coin.prefab.meta                     67.93414   5.0834193  630a29ced11ac794a937625ad78c71f4
+parallax-space-stars.prefab.meta     30         4.8        d68c3867e60f87849abbc8fa77e8238a
+Canvas.prefab.meta                   0          0          b631dfe68422f164585e12d5086d8776
+enemy.prefab.meta                    116.03     -0.99      4746434d63eb45d40be2eff9e198a495
+
+
+

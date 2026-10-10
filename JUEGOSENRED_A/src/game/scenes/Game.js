@@ -1,0 +1,255 @@
+import * as Phaser from 'phaser';
+const { Scene } = Phaser;
+
+export class Game extends Scene {
+    constructor() { super('Game'); }
+
+    create() {
+        this.cameras.main.setBackgroundColor('#101827');
+        const level = this.cache.json.get('nivel1');
+        const mapping = this.cache.json.get('tile-mapping');
+        const objects = this.cache.json.get('nivel1-objetos');
+        if (!level || !mapping || !Array.isArray(objects)) {
+            throw new Error('Faltan nivel1, tile-mapping o nivel1-objetos en Preloader.js');
+        }
+        this.level = level;
+        this.unit = 32; // Mismo tamano que la celda del nivel exportado
+        this.worldWidth = level.width * this.unit;
+        this.worldHeight = level.height * this.unit;
+        this.physics.world.setBounds(0, 0, this.worldWidth, this.worldHeight);
+        this.cameras.main.setBounds(0, 0, this.worldWidth, this.worldHeight);
+
+        const frames = new Map(mapping.map(t => [t.unityIndex, t.frame]));
+        this.platforms = this.physics.add.staticGroup();
+        for (const tile of level.tiles) {
+            const frame = frames.get(tile.tileIndex);
+            if (frame === undefined) continue;
+            const x = (tile.x - level.originX) * this.unit;
+            const y = (level.originY + level.height - 1 - tile.y) * this.unit;
+            this.add.image(x, y, 'space-base', frame).setOrigin(0, 0);
+            const body = this.add.zone(x + 16, y + 16, 32, 32);
+            this.physics.add.existing(body, true);
+            this.platforms.add(body);
+        }
+        // Suelo de seguridad heredado del prototipo anterior; retirar al validar el tilemap.
+        this.ground = this.add.rectangle(this.worldWidth / 2, this.worldHeight - 16, this.worldWidth, 32, 0x526477, 0.35);
+        this.physics.add.existing(this.ground, true);
+
+        this.health = 3;
+        this.score = 0;
+        this.coinCount = 0;
+        this.finished = false;
+        this.invulnerableUntil = 0;
+        this.playerBullets = this.physics.add.group();
+        this.enemyBullets = this.physics.add.group();
+        this.enemies = this.physics.add.group();
+        this.coins = this.physics.add.group({ allowGravity: false, immovable: true });
+        this.healthItems = this.physics.add.group({ allowGravity: false, immovable: true });
+
+        const start = objects.find(o => o.type === 'player');
+        const spawn = start ? this.toPixels(start) : { x: 200, y: 500 };
+        this.player = this.physics.add.sprite(spawn.x, spawn.y, 'player', 16);
+        this.player.setScale(2).setCollideWorldBounds(true);
+        this.player.body.setSize(22, 29).setOffset(5, 3);
+        this.registerAnimations();
+        this.player.play('player-idle');
+        this.fireSprite = this.add.image(this.player.x, this.player.y, 'player-fire')
+            .setScale(2).setDepth(20).setVisible(false);
+
+        for (const obj of objects) {
+            const p = this.toPixels(obj);
+            if (obj.type === 'enemy') {
+                const enemy = this.enemies.create(p.x, p.y, 'enemy', 16);
+                enemy.setScale(2).setCollideWorldBounds(true);
+                enemy.body.setSize(22, 29).setOffset(5, 3);
+                enemy.setData('nextShot', this.time.now + Phaser.Math.Between(800, 2200));
+                enemy.play('enemy-idle');
+            } else if (obj.type === 'coin') {
+                const coin = this.add.circle(p.x, p.y, 10, 0xffd54a);
+                this.physics.add.existing(coin);
+                coin.body.setAllowGravity(false).setImmovable(true);
+                this.coins.add(coin);
+            } else if (obj.type === 'health') {
+                const item = this.add.rectangle(p.x, p.y, 23, 23, 0x45d881);
+                this.add.text(p.x, p.y, '+', { fontSize: '23px', color: '#ffffff' }).setOrigin(0.5).setDepth(5);
+                this.physics.add.existing(item);
+                item.body.setAllowGravity(false).setImmovable(true);
+                this.healthItems.add(item);
+            }
+        }
+        this.enemyCount = this.enemies.countActive();
+        for (const entity of [this.player, this.enemies]) {
+            this.physics.add.collider(entity, this.platforms);
+            this.physics.add.collider(entity, this.ground);
+        }
+        this.physics.add.overlap(this.playerBullets, this.platforms, bullet => bullet.destroy());
+        this.physics.add.overlap(this.enemyBullets, this.platforms, bullet => bullet.destroy());
+        this.physics.add.overlap(this.playerBullets, this.ground, bullet => bullet.destroy());
+        this.physics.add.overlap(this.enemyBullets, this.ground, bullet => bullet.destroy());
+        this.physics.add.overlap(this.playerBullets, this.enemies, (bullet, enemy) => {
+            if (!bullet.active || !enemy.active) return;
+            bullet.destroy(); enemy.destroy();
+            this.score += 500; this.enemyCount--;
+            this.updateHud();
+            if (this.enemyCount === 0) this.finish(true);
+        });
+        this.physics.add.overlap(this.enemyBullets, this.player, (obj1, obj2) => {
+    const bullet = obj1 === this.player ? obj2 : obj1;
+    if (!bullet || bullet === this.player || !bullet.active) return;
+    const fromX = bullet.x;
+    bullet.destroy();
+    this.damagePlayer(fromX, 'proyectil');
+});
+        this.physics.add.overlap(this.player, this.enemies, (_player, enemy) => this.damagePlayer(enemy.x, 'contacto'));
+        this.physics.add.overlap(this.player, this.coins, (_player, coin) => {
+            if (!coin.active) return;
+            coin.destroy(); this.coinCount++; this.score += 100;
+            if (this.coinCount % 5 === 0 && this.health < 3) this.health++;
+            this.updateHud();
+        });
+        this.physics.add.overlap(this.player, this.healthItems, (_player, item) => {
+            if (!item.active) return;
+            item.destroy(); this.score += 200; this.health = Math.min(3, this.health + 1);
+            this.updateHud();
+        });
+        this.cameras.main.startFollow(this.player);
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keys = this.input.keyboard.addKeys('A,D,W,SPACE');
+        this.input.on('pointerdown', pointer => { if (pointer.leftButtonDown()) this.shoot(); });
+        this.hud = this.add.text(20, 20, '', { fontFamily: 'monospace', fontSize: '22px', color: '#ffffff', backgroundColor: '#00000099', padding: { x: 10, y: 8 } })
+            .setScrollFactor(0).setDepth(100);
+        this.updateHud();
+        console.log('Objetos Unity importados:', objects.length, 'Enemigos:', this.enemyCount);
+    }
+
+    toPixels(o) {
+        return {
+            x: (o.x - this.level.originX) * this.unit,
+            y: (this.level.originY + this.level.height - o.y) * this.unit
+        };
+    }
+
+    registerAnimations() {
+        const anim = (key, texture, frames, rate, repeat = -1) => {
+            if (!this.anims.exists(key)) this.anims.create({ key, frames: this.anims.generateFrameNumbers(texture, { frames }), frameRate: rate, repeat });
+        };
+        anim('player-idle', 'player', [16, 17], 4);
+        anim('player-walk', 'player', [48, 49, 50, 51], 6);
+        anim('player-jump', 'player', [96], 1); // Se conserva el frame validado en el prototipo.
+        anim('enemy-idle', 'enemy', [16, 17], 4);
+        anim('enemy-walk', 'enemy', [48, 49, 50, 51], 6);
+    }
+
+    shoot() {
+        if (this.finished || !this.player.active) return;
+        const dir = this.player.flipX ? -1 : 1;
+        const x = this.player.x + dir * 38;
+        const bullet = this.playerBullets.create(x, this.player.y, 'player-bullet');
+        bullet.setScale(2).setVelocity(dir * 700, 0).setFlipX(dir < 0);
+        bullet.body.setAllowGravity(true);
+        this.fireSprite.setPosition(x, this.player.y).setFlipX(dir < 0).setVisible(true);
+        if (this.fireTimer) this.fireTimer.remove();
+        this.fireTimer = this.time.delayedCall(100, () => this.fireSprite.setVisible(false));
+    }
+
+    enemyShoot(enemy, dir) {
+        const bullet = this.enemyBullets.create(enemy.x + dir * 38, enemy.y, 'enemy-bullet');
+        bullet.setScale(2).setVelocity(dir * 460, 0).setFlipX(dir < 0);
+        bullet.body.setAllowGravity(true);
+    }
+
+    damagePlayer(fromX, cause = 'desconocido') {
+        if (this.finished || this.health <= 0 || this.time.now < this.invulnerableUntil) return;
+        this.health = Math.max(0, this.health - 1);
+        this.invulnerableUntil = this.time.now + 1800;
+        console.log(`[COMBATE] ${cause}: vida ${this.health}/3, t=${Math.round(this.time.now)}ms`);
+        this.updateHud();
+        if (this.health === 0) {
+            this.finish(false);
+            return;
+        }
+        // Retroceso desactivado temporalmente para depurar el daÃƒÂ±o.
+        this.player.setTint(0xff7777);
+        this.time.delayedCall(250, () => { if (this.player?.active && !this.finished) this.player.clearTint(); });
+    }
+    updateHud() {
+        this.hud?.setText(`VIDA: ${this.health}/3   PUNTOS: ${this.score}   MONEDAS: ${this.coinCount}   ENEMIGOS: ${this.enemyCount}`);
+    }
+
+    finish(won) {
+        if (this.finished) return;
+        this.finished = true;
+        this.fireSprite.setVisible(false);
+        this.player.setVelocity(0, 0);
+        this.player.body.enable = false;
+        for (const enemy of this.enemies.getChildren()) {
+            if (enemy.active) enemy.setVelocity(0, 0);
+        }
+        // Secuencia de muerte independiente de las animaciones del spritesheet.
+        // El original Unity se incorporara al identificar todos sus fileIDs.
+        if (!won) {
+            this.player.anims.stop();
+            this.player.setTint(0xff6666);
+            this.tweens.add({
+                targets: this.player, angle: 90, alpha: 0.15, y: this.player.y - 24,
+                duration: 900, ease: 'Sine.easeInOut',
+                onComplete: () => this.showEndScreen(false)
+            });
+        } else {
+            this.showEndScreen(true);
+        }
+    }
+
+    showEndScreen(won) {
+        this.physics.pause();
+        const label = won ? 'NIVEL COMPLETADO' : 'GAME OVER';
+        this.add.rectangle(this.cameras.main.width / 2, this.cameras.main.height / 2,
+            this.cameras.main.width, this.cameras.main.height, 0x080d1b, 0.83)
+            .setScrollFactor(0).setDepth(199);
+        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2,
+            `${label}\nPUNTOS: ${this.score}\nENEMIGOS RESTANTES: ${this.enemyCount}\n\nPULSA R PARA REINICIAR`,
+            { fontSize: '32px', fontFamily: 'monospace', color: '#ffffff', align: 'center', lineSpacing: 14 })
+            .setOrigin(0.5).setScrollFactor(0).setDepth(200);
+        this.input.keyboard.once('keydown-R', () => this.scene.restart());
+    }
+    update(time, delta) {
+        if (this.finished || !this.player?.active) return;
+        const left = this.cursors.left.isDown || this.keys.A.isDown;
+        const right = this.cursors.right.isDown || this.keys.D.isDown;
+        const jump = this.cursors.up.isDown || this.keys.W.isDown || this.keys.SPACE.isDown;
+        if (left) { this.player.setVelocityX(-250); this.player.setFlipX(true); }
+        else if (right) { this.player.setVelocityX(250); this.player.setFlipX(false); }
+        else this.player.setVelocityX(0);
+        if (jump && this.player.body.blocked.down) this.player.setVelocityY(-400);
+        if (!this.player.body.blocked.down) this.player.play('player-jump', true);
+        else if (left || right) this.player.play('player-walk', true);
+        else this.player.play('player-idle', true);
+        if (this.time.now > this.invulnerableUntil) this.player.clearTint();
+        if (this.fireSprite.visible) this.fireSprite.setPosition(this.player.x + (this.player.flipX ? -38 : 38), this.player.y);
+
+        for (const enemy of this.enemies.getChildren()) {
+            if (!enemy.active) continue;
+            const dx = this.player.x - enemy.x;
+            const distance = Math.abs(dx);
+            const dir = Math.sign(dx) || 1;
+            enemy.setFlipX(dir < 0);
+            if (distance >= 5 * this.unit && distance <= 15 * this.unit) {
+                enemy.setVelocityX(dir * 64); // 2 unidades Unity/s * 32 px/unidad
+                enemy.play('enemy-walk', true);
+            } else {
+                enemy.setVelocityX(0);
+                enemy.play('enemy-idle', true);
+            }
+            if (distance < 14 * this.unit && time >= enemy.getData('nextShot')) {
+                // Aproximacion temporal a la probabilidad 1/32 por FixedUpdate original.
+                this.enemyShoot(enemy, dir);
+                enemy.setData('nextShot', time + Phaser.Math.Between(400, 1300));
+            }
+        }
+        for (const bullet of [...this.playerBullets.getChildren(), ...this.enemyBullets.getChildren()]) {
+            if (bullet.active && (!bullet.body || bullet.x < 0 || bullet.x > this.worldWidth || bullet.y > this.worldHeight || Math.abs(bullet.x - this.player.x) > 1300)) bullet.destroy();
+        }
+    }
+}
+
+
