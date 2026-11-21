@@ -1,0 +1,155 @@
+﻿
+import { Scene } from 'phaser';
+
+export class Game extends Scene {
+    constructor() {
+        super('Game');
+    }
+
+    create() {
+        this.cameras.main.setBackgroundColor('#101827');
+
+        // Datos exportados del nivel original de Unity
+        const nivel = this.cache.json.get('nivel1');
+        const mapping = this.cache.json.get('tile-mapping');
+
+        if (!nivel || !mapping) {
+            console.error('Error: no se han cargado los datos del nivel.');
+            return;
+        }
+
+        const tileSize = 32;
+        const worldWidth = nivel.width * tileSize;
+        const worldHeight = nivel.height * tileSize;
+
+        // Relacionamos cada indice de Unity con su frame de Phaser
+        const frames = new Map(
+            mapping.map(tile => [tile.unityIndex, tile.frame])
+        );
+
+        // Reconstruccion grafica del escenario
+        this.tiles = this.add.container(0, 0);
+
+        let colocados = 0;
+
+        for (const tile of nivel.tiles) {
+            const frame = frames.get(tile.tileIndex);
+
+            if (frame === undefined) {
+                console.warn('Tile sin correspondencia:', tile.tileIndex);
+                continue;
+            }
+
+            // Unity: origen inferior y eje Y hacia arriba
+            // Phaser: origen superior y eje Y hacia abajo
+            const x = (tile.x - nivel.originX) * tileSize;
+            const y = (
+                nivel.originY + nivel.height - 1 - tile.y
+            ) * tileSize;
+
+            const imagen = this.add.image(
+                x,
+                y,
+                'space-base',
+                frame
+            ).setOrigin(0, 0);
+
+            this.tiles.add(imagen);
+            colocados++;
+        }
+
+        console.log('Tiles reconstruidos:', colocados);
+
+        // Limites del mundo
+        this.physics.world.setBounds(
+            0, 0, worldWidth, worldHeight
+        );
+
+        this.cameras.main.setBounds(
+            0, 0, worldWidth, worldHeight
+        );
+
+        // Suelo temporal hasta importar las colisiones reales
+        this.ground = this.add.rectangle(
+            worldWidth / 2,
+            worldHeight - 16,
+            worldWidth,
+            32,
+            0x526477,
+            0.35
+        );
+
+        this.physics.add.existing(this.ground, true);
+
+        // Jugador
+        this.player = this.physics.add.sprite(
+            200,
+            500,
+            'player',
+            16
+        );
+
+        this.player.setScale(2);
+        this.player.setCollideWorldBounds(true);
+        this.physics.add.collider(this.player, this.ground);
+
+        // Camara siguiendo al jugador
+        this.cameras.main.startFollow(this.player);
+
+        // Controles originales del prototipo
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keys = this.input.keyboard.addKeys('A,D,W,SPACE');
+
+        // HUD fijo en pantalla
+        this.add.text(
+            20,
+            20,
+            'PROYECTO JR - UNITY TO PHASER',
+            {
+                fontSize: '22px',
+                color: '#ffffff'
+            }
+        ).setScrollFactor(0).setDepth(100);
+
+        console.log(
+            'Dimensiones del nivel:',
+            worldWidth,
+            'x',
+            worldHeight
+        );
+    }
+
+    update() {
+        if (!this.player) return;
+
+        const speed = 250;
+        const jump = -400;
+
+        const left =
+            this.cursors.left.isDown ||
+            this.keys.A.isDown;
+
+        const right =
+            this.cursors.right.isDown ||
+            this.keys.D.isDown;
+
+        const jumping =
+            this.cursors.up.isDown ||
+            this.keys.W.isDown ||
+            this.keys.SPACE.isDown;
+
+        if (left) {
+            this.player.setVelocityX(-speed);
+            this.player.setFlipX(true);
+        } else if (right) {
+            this.player.setVelocityX(speed);
+            this.player.setFlipX(false);
+        } else {
+            this.player.setVelocityX(0);
+        }
+
+        if (jumping && this.player.body.blocked.down) {
+            this.player.setVelocityY(jump);
+        }
+    }
+}

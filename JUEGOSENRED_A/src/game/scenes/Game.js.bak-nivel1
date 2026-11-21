@@ -1,0 +1,46 @@
+﻿import { Scene } from 'phaser';
+export class Game extends Scene {
+    constructor() {
+        super('Game');
+    }
+    create() {
+        this.cameras.main.setBackgroundColor('#101827');
+        // Suelo provisional hasta importar el nivel original
+        this.ground = this.add.rectangle(512, 700, 1024, 64, 0x526477);
+        this.physics.add.existing(this.ground, true);
+        // Jugador original de Unity
+        this.player = this.physics.add.sprite(200, 500, 'player', 16);
+        this.player.setScale(2);
+        this.player.setCollideWorldBounds(true);
+        this.physics.add.collider(this.player, this.ground);
+        // Controles
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keys = this.input.keyboard.addKeys('A,D,W,SPACE');
+        this.add.text(20, 20, 'PROYECTO JR - UNITY TO PHASER', {
+            fontSize: '22px',
+            color: '#ffffff'
+        }).setScrollFactor(0);
+    }
+    update() {
+        const speed = 250;
+        const jump = -400;
+        const left = this.cursors.left.isDown || this.keys.A.isDown;
+        const right = this.cursors.right.isDown || this.keys.D.isDown;
+        const jumping =
+            this.cursors.up.isDown ||
+            this.keys.W.isDown ||
+            this.keys.SPACE.isDown;
+        if (left) {
+            this.player.setVelocityX(-speed);
+            this.player.setFlipX(true);
+        } else if (right) {
+            this.player.setVelocityX(speed);
+            this.player.setFlipX(false);
+        } else {
+            this.player.setVelocityX(0);
+        }
+        if (jumping && this.player.body.blocked.down) {
+            this.player.setVelocityY(jump);
+        }
+    }
+}

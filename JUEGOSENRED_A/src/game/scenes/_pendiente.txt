@@ -1,0 +1,2 @@
+- player2bullets (colisiones y restar salud j1)
+- controles j2

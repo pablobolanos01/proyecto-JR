@@ -1,0 +1,242 @@
+﻿
+import { Scene } from 'phaser';
+
+export class Game extends Scene {
+    constructor() {
+        super('Game');
+    }
+
+    create() {
+        this.cameras.main.setBackgroundColor('#101827');
+
+        // Datos exportados del nivel original de Unity
+        const nivel = this.cache.json.get('nivel1');
+        const mapping = this.cache.json.get('tile-mapping');
+
+        if (!nivel || !mapping) {
+            console.error('Error: no se han cargado los datos del nivel.');
+            return;
+        }
+
+        const tileSize = 32;
+        const worldWidth = nivel.width * tileSize;
+        const worldHeight = nivel.height * tileSize;
+
+        // Relacionamos cada indice de Unity con su frame de Phaser
+        const frames = new Map(
+            mapping.map(tile => [tile.unityIndex, tile.frame])
+        );
+
+        // Reconstruccion grafica del escenario
+        this.tiles = this.add.container(0, 0);
+
+        // Grupo de cuerpos fisicos estaticos del escenario
+        this.platforms = this.physics.add.staticGroup();
+
+        let colocados = 0;
+        let collidersCreados = 0;
+
+        for (const tile of nivel.tiles) {
+            const frame = frames.get(tile.tileIndex);
+
+            if (frame === undefined) {
+                console.warn('Tile sin correspondencia:', tile.tileIndex);
+                continue;
+            }
+
+            // Unity: origen inferior y eje Y hacia arriba
+            // Phaser: origen superior y eje Y hacia abajo
+            const x = (tile.x - nivel.originX) * tileSize;
+            const y = (
+                nivel.originY + nivel.height - 1 - tile.y
+            ) * tileSize;
+
+            // Sprite visual del tile
+            const imagen = this.add.image(
+                x,
+                y,
+                'space-base',
+                frame
+            ).setOrigin(0, 0);
+
+            this.tiles.add(imagen);
+            colocados++;
+
+            // Collider rectangular provisional de 32x32
+            const bloque = this.add.zone(
+                x + tileSize / 2,
+                y + tileSize / 2,
+                tileSize,
+                tileSize
+            );
+
+            this.physics.add.existing(bloque, true);
+            this.platforms.add(bloque);
+
+            collidersCreados++;
+        }
+
+        console.log('Tiles reconstruidos:', colocados);
+        console.log('Colliders creados:', collidersCreados);
+
+        // Limites del mundo
+        this.physics.world.setBounds(
+            0, 0, worldWidth, worldHeight
+        );
+
+        this.cameras.main.setBounds(
+            0, 0, worldWidth, worldHeight
+        );
+
+        // Suelo temporal, pendiente de retirar
+        this.ground = this.add.rectangle(
+            worldWidth / 2,
+            worldHeight - 16,
+            worldWidth,
+            32,
+            0x526477,
+            0.35
+        );
+
+        this.physics.add.existing(this.ground, true);
+
+        // Jugador
+        this.player = this.physics.add.sprite(
+            200,
+            500,
+            'player',
+            16
+        );
+
+        this.player.setScale(2);
+        this.player.setCollideWorldBounds(true);
+
+        // Animaciones originales del jugador de Unity
+
+      // Idle
+// Idle original de Unity: alternancia cada 0.25 segundos
+this.anims.create({
+    key: 'player-idle',
+    frames: [
+        { key: 'player', frame: 16 },
+        { key: 'player', frame: 17 }
+    ],
+    frameRate: 4,
+    repeat: -1
+});
+
+// Walk
+this.anims.create({
+    key: 'player-walk',
+    frames: this.anims.generateFrameNumbers('player', {
+        frames: [48, 49, 50, 51]
+    }),
+    frameRate: 6,
+    repeat: -1
+});
+
+// Jump
+this.anims.create({
+    key: 'player-jump',
+    frames: [
+        { key: 'player', frame: 96 }
+    ],
+    frameRate: 1,
+    repeat: -1
+});
+
+        // Jump: un unico sprite
+        this.anims.create({
+            key: 'player-jump',
+            frames: [
+                { key: 'player', frame: 88 }
+            ],
+            frameRate: 1,
+            repeat: -1
+        });
+
+        this.player.play('player-idle');
+
+        // Colision con el suelo provisional
+        this.physics.add.collider(
+            this.player,
+            this.ground
+        );
+
+        // Colision con las plataformas originales
+        this.physics.add.collider(
+            this.player,
+            this.platforms
+        );
+
+        // Camara siguiendo al jugador
+        this.cameras.main.startFollow(this.player);
+
+        // Controles
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keys = this.input.keyboard.addKeys('A,D,W,SPACE');
+
+        // HUD fijo en pantalla
+        this.add.text(
+            20,
+            20,
+            'PROYECTO JR - UNITY TO PHASER',
+            {
+                fontSize: '22px',
+                color: '#ffffff'
+            }
+        ).setScrollFactor(0).setDepth(100);
+
+        console.log(
+            'Dimensiones del nivel:',
+            worldWidth,
+            'x',
+            worldHeight
+        );
+    }
+
+    update() {
+        if (!this.player) return;
+
+        const speed = 250;
+        const jump = -400;
+
+        const left =
+            this.cursors.left.isDown ||
+            this.keys.A.isDown;
+
+        const right =
+            this.cursors.right.isDown ||
+            this.keys.D.isDown;
+
+        const jumping =
+            this.cursors.up.isDown ||
+            this.keys.W.isDown ||
+            this.keys.SPACE.isDown;
+
+        // Movimiento horizontal
+        if (left) {
+            this.player.setVelocityX(-speed);
+            this.player.setFlipX(true);
+        } else if (right) {
+            this.player.setVelocityX(speed);
+            this.player.setFlipX(false);
+        } else {
+            this.player.setVelocityX(0);
+        }
+
+        // Salto
+        if (jumping && this.player.body.blocked.down) {
+            this.player.setVelocityY(jump);
+        }
+
+        // Transiciones automaticas de animacion
+        if (!this.player.body.blocked.down) {
+            this.player.play('player-jump', true);
+        } else if (left || right) {
+            this.player.play('player-walk', true);
+        } else {
+            this.player.play('player-idle', true);
+        }
+    }
+}
