@@ -1,29 +1,42 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
 
-export class MainMenu extends Scene
-{
-    constructor ()
-    {
+export class MainMenu extends Scene {
+
+    constructor() {
         super('MainMenu');
     }
 
-    create ()
-    {
-        this.add.image(512, 384, 'background');
-
-        this.add.image(512, 300, 'logo');
-
-        this.add.text(512, 460, 'Main Menu', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
+    create() {
+        this.add.text(512, 150, 'STAR EXPLORER', {
+            fontSize: '64px',
+            color: '#ffffff'
         }).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
+        const localBtn = this.add.text(512, 320, 'Local Multiplayer', {
+            fontSize: '32px',
+            color: '#00ff00'
+        }).setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => localBtn.setStyle({ color: '#ffff00' }))
+            .on('pointerout', () => localBtn.setStyle({ color: '#00ff00' }))
+            .on('pointerdown', () => this.scene.start('Game'));
 
-            //this.scene.start('Game');
-            this.scene.start('Game');
+        const setBtn = this.add.text(512, 380, 'Settings', {
+            fontSize: '32px',
+            color: '#00ff00'
+        }).setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => setBtn.setStyle({ color: '#ffff00' }))
+            .on('pointerout', () => setBtn.setStyle({ color: '#00ff00' }))
+            .on('pointerdown', () => this.scene.start('Settings'));
 
-        });
+        const credBtn = this.add.text(512, 440, 'Credits', {
+            fontSize: '32px',
+            color: '#00ff00'
+        }).setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => credBtn.setStyle({ color: '#ffff00' }))
+            .on('pointerout', () => credBtn.setStyle({ color: '#00ff00' }))
+            .on('pointerdown', () => this.scene.start('Credits'));
     }
 }

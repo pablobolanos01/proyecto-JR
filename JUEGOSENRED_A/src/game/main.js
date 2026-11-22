@@ -3,6 +3,8 @@ import { Game as MainGame } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 import { MainMenu } from './scenes/MainMenu';
 import { Preloader } from './scenes/Preloader';
+import { Settings } from './scenes/Settings';
+import { Credits } from './scenes/Credits';
 import { AUTO, Game, Scale } from 'phaser';
 
 //  Find out more information about the Game Config at:
@@ -12,7 +14,7 @@ const config = {
     width: 1024,
     height: 768,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#002d52', //'#028af8',
     scale: {
         mode: Scale.FIT,
         autoCenter: Scale.CENTER_BOTH
@@ -29,7 +31,9 @@ const config = {
         Preloader,
         MainMenu,
         MainGame,
-        GameOver
+        Settings,
+        GameOver,
+        Credits
     ]
 };
 

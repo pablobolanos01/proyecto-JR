@@ -1,10 +1,16 @@
 import * as Phaser from 'phaser';
+import { createKeys, playMusic, playSfx } from './Settings';
+
 const { Scene } = Phaser;
 
 export class Game extends Scene {
     constructor() { super('Game'); }
 
     create() {
+        //cargar ajustes
+        //playMusic();
+        this.keys1 = createKeys(this, 'p1');
+        this.keys2 = createKeys(this, 'p2');
         this.cameras.main.setBackgroundColor('#101827');
         const level = this.cache.json.get('nivel1');
         const mapping = this.cache.json.get('tile-mapping');
@@ -106,7 +112,7 @@ export class Game extends Scene {
             if (!bullet || bullet === this.player1 || !bullet.active) return;
             const fromX = bullet.x;
             bullet.destroy();
-            this.damagePlayer(fromX, 'proyectil');
+            this.damagePlayer1(fromX, 'proyectil');
         });
 
 
@@ -148,8 +154,8 @@ export class Game extends Scene {
         this.cameras.main.startFollow(this.player1); //se debe cambiar para que siga a los dos jugadores (similar a super smash bros, no se como se hace)
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keys = this.input.keyboard.addKeys('A,D,W,SPACE,J,L,I');
-        this.input.on('pointerdown', pointer => { if (pointer.leftButtonDown()) this.p1Shoot(); });
-        this.input.keyboard.on('keydown-NUMPAD_ZERO', () => this.p2Shoot());
+        this.keys1.shoot.on("down", () => this.p1Shoot());
+        this.keys2.shoot.on("down", () => this.p2Shoot());
         this.hud = this.add.text(20, 20, '', { fontFamily: 'monospace', fontSize: '22px', color: '#ffffff', backgroundColor: '#00000099', padding: { x: 10, y: 8 } })
             .setScrollFactor(0).setDepth(100);
         this.updateHud();
@@ -287,9 +293,10 @@ export class Game extends Scene {
     update(time, delta) {
         //GESTION J1
         if (this.finished || !this.player1?.active) return;
-        const left1 = this.keys.A.isDown;
-        const right1 = this.keys.D.isDown;
-        const jump1 = this.keys.W.isDown || this.keys.SPACE.isDown;
+        const left1 = this.keys1.left.isDown;
+        const right1 = this.keys1.right.isDown;
+        const jump1 = this.keys1.jump.isDown;
+        const shoot1 = this.keys1.shoot.isDown;
         if (left1) { this.player1.setVelocityX(-250); this.player1.setFlipX(true); }
         else if (right1) { this.player1.setVelocityX(250); this.player1.setFlipX(false); }
         else this.player1.setVelocityX(0);
