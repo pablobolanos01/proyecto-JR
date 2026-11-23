@@ -1,4 +1,6 @@
 import { Scene } from "phaser";
+// Importa playMusic desde Settings (está en la misma carpeta scenes/)
+import { playMusic } from './Settings';
 
 export class MainMenu extends Scene {
 
@@ -12,6 +14,13 @@ export class MainMenu extends Scene {
         // Fondo del menú principal (primero para quedar detrás de textos y botones)
         const bg = this.add.image(width / 2, height / 2, 'bg-main-menu');
         bg.setDisplaySize(width, height);
+
+        //Música del menu principal
+        // Detiene la música de partida si volvemos al menú principal
+        this.sound.stopByKey('music-game');
+
+        // Inicia o mantiene la música del menú aplicando el volumen de ajustes (options.music)
+        playMusic(this, 'music-menu');
 
         this.add.text(512, 150, 'STAR EXPLORER', {
             fontSize: '64px',

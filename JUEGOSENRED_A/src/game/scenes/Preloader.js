@@ -52,6 +52,19 @@ export class Preloader extends Scene {
 
         this.load.image('player-bullet', 'characters/player-bullet.png');
         this.load.image('player-fire', 'characters/player-fire.png');
+
+        //audio y música
+        // Carga la música de fondo del menú principal desde public/assets/audio/mainmenu.mp3
+        this.load.audio('music-menu', 'audio/mainmenu.mp3');
+
+        // Carga la música de fondo durante la partida desde public/assets/audio/partida.mp3
+        this.load.audio('music-game', 'audio/partida.mp3');
+
+        // Carga el efecto de sonido de salto desde public/assets/audio/salto.mp3
+        this.load.audio('sfx-jump', 'audio/salto.mp3');
+
+        // Carga el efecto de sonido de disparo láser desde public/assets/audio/disparoLaser.mp3
+        this.load.audio('sfx-shoot', 'audio/disparoLaser.mp3');
     }
 
     create() {
