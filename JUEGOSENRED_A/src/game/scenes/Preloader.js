@@ -1,14 +1,11 @@
 import { Scene } from 'phaser';
 
-export class Preloader extends Scene
-{
-    constructor ()
-    {
+export class Preloader extends Scene {
+    constructor() {
         super('Preloader');
     }
 
-    init ()
-    {
+    init() {
         //  We loaded this image in our Boot Scene, so we can display it here
         this.add.image(512, 384, 'background');
 
@@ -16,7 +13,7 @@ export class Preloader extends Scene
         this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
 
         //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(512-230, 384, 4, 28, 0xffffff);
+        const bar = this.add.rectangle(512 - 230, 384, 4, 28, 0xffffff);
 
         //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
         this.load.on('progress', (progress) => {
@@ -27,10 +24,15 @@ export class Preloader extends Scene
         });
     }
 
-    preload ()
-    {
+    preload() {
         //  Load the assets for the game - Replace with your own assets
         this.load.setPath('assets');
+
+        // Fondos de escenas (ajusta la ruta si los guardas en una subcarpeta como 'backgrounds/')
+        this.load.image('bg-credits', 'bg_creditos.jpg');
+        this.load.image('bg-settings', 'bg_settings.jpg');
+        this.load.image('bg-main-menu', 'bg_mainMenu.jpg');
+        this.load.image('bg-escenario', 'bg_escenario.jpg');
 
         this.load.image('logo', 'logo.png');
         // Nivel original exportado desde Unity
@@ -39,7 +41,6 @@ export class Preloader extends Scene
             frameHeight: 32
         });
         this.load.json('nivel1', 'tiles/nivel1.json');
-        this.load.image('enemy-bullet', 'characters/enemy-bullet.png');
         this.load.json('nivel1-objetos', 'tiles/nivel1-objetos.json');
         this.load.json('tile-mapping', 'tiles/tile-mapping.json');
         this.load.spritesheet('player', 'characters/player.png', {
@@ -50,17 +51,10 @@ export class Preloader extends Scene
         });
 
         this.load.image('player-bullet', 'characters/player-bullet.png');
-        this.load.spritesheet('enemy', 'characters/enemy.png', {
-            frameWidth: 32,
-            frameHeight: 32,
-            margin: 16,
-            spacing: 16
-        });
+        this.load.image('player-fire', 'characters/player-fire.png');
+    }
 
-        this.load.image('player-fire', 'characters/player-fire.png');    }
-
-    create ()
-    {
+    create() {
         //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
         //  For example, you can define global animations here, so we can use them in other scenes.
 
@@ -68,4 +62,3 @@ export class Preloader extends Scene
         this.scene.start('MainMenu');
     }
 }
-

@@ -7,6 +7,12 @@ export class Credits extends Scene {
     }
 
     create() {
+        const { width, height } = this.scale;
+
+        // Fondo de créditos (primero para quedar detrás de textos y botón)
+        const bg = this.add.image(width / 2, height / 2, 'bg-credits');
+        bg.setDisplaySize(width, height);
+
         this.add.text(512, 150, 'STAR STUDIOS', {
             fontSize: '64px',
             color: '#ffffff'

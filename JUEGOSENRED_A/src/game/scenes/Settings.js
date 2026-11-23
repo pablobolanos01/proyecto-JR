@@ -107,7 +107,13 @@ export class Settings extends Scene {
     }
 
     create() {
-        const H = this.scale.height;
+        const { width, height } = this.scale;
+        const H = height;
+
+        // Fondo de ajustes (primero para quedar detrás de todo)
+        const bg = this.add.image(width / 2, height / 2, 'bg-settings');
+        bg.setDisplaySize(width, height);
+
         this.waiting = null;                // tecla que estamos esperando (o null)
         this.keyTexts = { p1: {}, p2: {} }; // los textos de cada tecla
 

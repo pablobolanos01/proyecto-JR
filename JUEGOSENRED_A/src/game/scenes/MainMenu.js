@@ -7,6 +7,12 @@ export class MainMenu extends Scene {
     }
 
     create() {
+        const { width, height } = this.scale;
+
+        // Fondo del menú principal (primero para quedar detrás de textos y botones)
+        const bg = this.add.image(width / 2, height / 2, 'bg-main-menu');
+        bg.setDisplaySize(width, height);
+
         this.add.text(512, 150, 'STAR EXPLORER', {
             fontSize: '64px',
             color: '#ffffff'
