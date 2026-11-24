@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
-import { createKeys, playMusic } from './Settings';
+// Añade playSfx para reproducir efectos usando el volumen configurado en Settings
+import { createKeys, playMusic, playSfx } from './Settings';
 
 const { Scene } = Phaser;
 
@@ -8,7 +9,14 @@ export class Game extends Scene {
 
     create() {
         //cargar ajustes
-        //playMusic();
+
+        //música
+        // Detiene la música del menú al entrar en partida
+        this.sound.stopByKey('music-menu');
+
+        // Reproduce la música de partida usando la función de Settings y su volumen actual
+        playMusic(this, 'music-game');
+
         this.keys1 = createKeys(this, 'p1');
         this.keys2 = createKeys(this, 'p2');
         this.cameras.main.setBackgroundColor('#101827');
@@ -190,6 +198,10 @@ export class Game extends Scene {
         const bullet = this.player1Bullets.create(x, this.player1.y, 'player-bullet');
         bullet.setScale(2).setVelocity(dir * 700, 0).setFlipX(dir < 0);
         bullet.body.setAllowGravity(false);
+
+        // Reproduce el sonido de disparo con el volumen de efectos (options.sfx) de Settings
+        playSfx(this, 'sfx-shoot');
+
         this.fireSprite1.setPosition(x, this.player1.y).setFlipX(dir < 0).setVisible(true);
         if (this.fireTimer1) this.fireTimer1.remove();
         this.fireTimer1 = this.time.delayedCall(100, () => { if (this.fireSprite1?.active) this.fireSprite1.setVisible(false); });
@@ -202,6 +214,10 @@ export class Game extends Scene {
         const bullet = this.player2Bullets.create(x, this.player2.y, 'player-bullet');
         bullet.setScale(2).setVelocity(dir * 700, 0).setFlipX(dir < 0);
         bullet.body.setAllowGravity(false);
+
+        // Reproduce el sonido de disparo con el volumen de efectos (options.sfx) de Settings
+        playSfx(this, 'sfx-shoot');
+
         this.fireSprite2.setPosition(x, this.player2.y).setFlipX(dir < 0).setVisible(true);
         if (this.fireTimer2) this.fireTimer2.remove();
         this.fireTimer2 = this.time.delayedCall(100, () => { if (this.fireSprite2?.active) this.fireSprite2.setVisible(false); });
@@ -300,7 +316,14 @@ export class Game extends Scene {
         if (left1) { this.player1.setVelocityX(-250); this.player1.setFlipX(true); }
         else if (right1) { this.player1.setVelocityX(250); this.player1.setFlipX(false); }
         else this.player1.setVelocityX(0);
-        if (jump1 && this.player1.body.blocked.down) this.player1.setVelocityY(-400);
+
+        // Reproduce el sonido de salto solo en el instante en que el jugador 1 despega del suelo
+        if (jump1 && this.player1.body.blocked.down) {
+            this.player1.setVelocityY(-400);
+            // Reproduce el sonido de disparo con el volumen de efectos (options.sfx) de Settings
+            playSfx(this, 'sfx-jump');
+        }
+
         if (!this.player1.body.blocked.down) this.player1.play('player-jump', true);
         else if (left1 || right1) this.player1.play('player-walk', true);
         else this.player1.play('player-idle', true);
@@ -315,7 +338,14 @@ export class Game extends Scene {
         if (left2) { this.player2.setVelocityX(-250); this.player2.setFlipX(true); }
         else if (right2) { this.player2.setVelocityX(250); this.player2.setFlipX(false); }
         else this.player2.setVelocityX(0);
-        if (jump2 && this.player2.body.blocked.down) this.player2.setVelocityY(-400);
+
+        // Reproduce el sonido de salto solo en el instante en que el jugador 2 despega del suelo
+        if (jump2 && this.player2.body.blocked.down) {
+            this.player2.setVelocityY(-400);
+            // Reproduce el sonido de salto con el volumen de efectos (options.sfx) de Settings
+            playSfx(this, 'sfx-jump');
+        }
+
         if (!this.player2.body.blocked.down) this.player2.play('player-jump', true);
         else if (left2 || right2) this.player2.play('player-walk', true);
         else this.player2.play('player-idle', true);
