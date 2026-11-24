@@ -74,7 +74,10 @@ export class Game extends Scene {
         this.score = 0;
         this.coinCount = 0;
         this.finished = false;
-        this.invulnerableUntil = 0;
+        this.isPaused = false;
+        this.debugGodMode = false; // Cambiar a true solo durante pruebas
+        this.invulnerableUntil1 = 0;
+        this.invulnerableUntil2 = 0;
         this.player1Bullets = this.physics.add.group();
         this.player2Bullets = this.physics.add.group();
         this.coins = this.physics.add.group({ allowGravity: false, immovable: true });
@@ -139,14 +142,36 @@ export class Game extends Scene {
             item.destroy(); this.score += 200; this.health2 = Math.min(3, this.health2 + 1);
             this.updateHud();
         });
-        this.cameras.main.startFollow(this.player1); //se debe cambiar para que siga a los dos jugadores (similar a super smash bros, no se como se hace)
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.keys = this.input.keyboard.addKeys('A,D,W,SPACE,J,L,I');
+        // Cámara fija: muestra el escenario completo y permite ver a ambos jugadores.
         this.keys1.shoot.on("down", () => this.p1Shoot());
         this.keys2.shoot.on("down", () => this.p2Shoot());
         this.hud = this.add.text(20, 20, '', { fontFamily: 'monospace', fontSize: '22px', color: '#ffffff', backgroundColor: '#00000099', padding: { x: 10, y: 8 } })
             .setScrollFactor(0).setDepth(100);
         this.updateHud();
+
+        this.pauseText = this.add.text(width / 2, height / 2,
+            'PAUSA\nPulsa P para continuar',
+            { fontSize: '32px', color: '#ffffff', backgroundColor: '#000000', align: 'center', padding: { x: 20, y: 15 } })
+            .setOrigin(0.5).setScrollFactor(0).setDepth(200).setVisible(false);
+
+        this.input.keyboard.on('keydown-P', () => {
+            if (this.finished) return;
+            this.isPaused = !this.isPaused;
+            if (this.isPaused) this.physics.pause();
+            else this.physics.resume();
+            this.pauseText.setVisible(this.isPaused);
+        });
+
+        this.input.keyboard.on('keydown-ESC', () => {
+            if (this.isPaused || this.finished) this.physics.resume();
+            this.isPaused = false;
+            this.scene.start('MainMenu');
+        });
+
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+            this.input.keyboard.off('keydown-P');
+            this.input.keyboard.off('keydown-ESC');
+        });
     }
 
     registerAnimations() {
@@ -159,33 +184,33 @@ export class Game extends Scene {
     }
 
     p1Shoot() {
-        if (this.finished || !this.player1.active) return;
+        if (this.finished || this.isPaused || !this.player1.active) return;
         const dir = this.player1.flipX ? -1 : 1;
         const x = this.player1.x + dir * 38;
         const bullet = this.player1Bullets.create(x, this.player1.y, 'player-bullet');
         bullet.setScale(2).setVelocity(dir * 700, 0).setFlipX(dir < 0);
         bullet.body.setAllowGravity(false);
         this.fireSprite1.setPosition(x, this.player1.y).setFlipX(dir < 0).setVisible(true);
-        if (this.fireTimer) this.fireTimer.remove();
-        this.fireTimer = this.time.delayedCall(100, () => this.fireSprite1.setVisible(false));
+        if (this.fireTimer1) this.fireTimer1.remove();
+        this.fireTimer1 = this.time.delayedCall(100, () => { if (this.fireSprite1?.active) this.fireSprite1.setVisible(false); });
     }
 
     p2Shoot() {
-        if (this.finished || !this.player2.active) return;
+        if (this.finished || this.isPaused || !this.player2.active) return;
         const dir = this.player2.flipX ? -1 : 1;
         const x = this.player2.x + dir * 38;
         const bullet = this.player2Bullets.create(x, this.player2.y, 'player-bullet');
         bullet.setScale(2).setVelocity(dir * 700, 0).setFlipX(dir < 0);
         bullet.body.setAllowGravity(false);
         this.fireSprite2.setPosition(x, this.player2.y).setFlipX(dir < 0).setVisible(true);
-        if (this.fireTimer) this.fireTimer.remove();
-        this.fireTimer = this.time.delayedCall(100, () => this.fireSprite2.setVisible(false));
+        if (this.fireTimer2) this.fireTimer2.remove();
+        this.fireTimer2 = this.time.delayedCall(100, () => { if (this.fireSprite2?.active) this.fireSprite2.setVisible(false); });
     }
 
     damagePlayer1(fromX, cause = 'desconocido') {
-        if (this.finished || this.health1 <= 0 || this.time.now < this.invulnerableUntil) return;
+        if (this.debugGodMode || this.finished || this.health1 <= 0 || this.time.now < this.invulnerableUntil1) return;
         this.health1 = Math.max(0, this.health1 - 1);
-        this.invulnerableUntil = this.time.now + 1800;
+        this.invulnerableUntil1 = this.time.now + 1800;
         console.log(`[COMBATE] ${cause}: vida ${this.health1}/3, t=${Math.round(this.time.now)}ms`);
         this.updateHud();
         if (this.health1 === 0) {
@@ -198,9 +223,9 @@ export class Game extends Scene {
     }
 
     damagePlayer2(fromX, cause = 'desconocido') {
-        if (this.finished || this.health2 <= 0 || this.time.now < this.invulnerableUntil) return;
+        if (this.debugGodMode || this.finished || this.health2 <= 0 || this.time.now < this.invulnerableUntil2) return;
         this.health2 = Math.max(0, this.health2 - 1);
-        this.invulnerableUntil = this.time.now + 1800;
+        this.invulnerableUntil2 = this.time.now + 1800;
         console.log(`[COMBATE] ${cause}: vida ${this.health2}/3, t=${Math.round(this.time.now)}ms`);
         this.updateHud();
         if (this.health2 === 0) {
@@ -213,7 +238,7 @@ export class Game extends Scene {
     }
 
     updateHud() {
-        this.hud?.setText(`VIDA: ${this.health1}/3   PUNTOS: ${this.score}   MONEDAS: ${this.coinCount}`);
+        this.hud?.setText(`J1: ${this.health1}/3   J2: ${this.health2}/3\nPUNTOS: ${this.score}   MONEDAS: ${this.coinCount}`);
     }
 
 
@@ -222,8 +247,11 @@ export class Game extends Scene {
         if (this.finished) return;
         this.finished = true;
         this.fireSprite1.setVisible(false);
-        this.player1.setVelocity(0, 0);
-        this.player1.body.enable = false;
+        this.fireSprite2.setVisible(false);
+        for (const player of [this.player1, this.player2]) {
+            player.setVelocity(0, 0);
+            player.body.enable = false;
+        }
         // Secuencia de muerte independiente de las animaciones del spritesheet.
         // El original Unity se incorporara al identificar todos sus fileIDs.
         if (!won) {
@@ -265,11 +293,10 @@ export class Game extends Scene {
 
     update(time, delta) {
         //GESTION J1
-        if (this.finished || !this.player1?.active) return;
+        if (this.isPaused || this.finished || !this.player1?.active) return;
         const left1 = this.keys1.left.isDown;
         const right1 = this.keys1.right.isDown;
         const jump1 = this.keys1.jump.isDown;
-        const shoot1 = this.keys1.shoot.isDown;
         if (left1) { this.player1.setVelocityX(-250); this.player1.setFlipX(true); }
         else if (right1) { this.player1.setVelocityX(250); this.player1.setFlipX(false); }
         else this.player1.setVelocityX(0);
@@ -277,14 +304,14 @@ export class Game extends Scene {
         if (!this.player1.body.blocked.down) this.player1.play('player-jump', true);
         else if (left1 || right1) this.player1.play('player-walk', true);
         else this.player1.play('player-idle', true);
-        if (this.time.now > this.invulnerableUntil) this.player1.clearTint();
+        if (this.time.now > this.invulnerableUntil1) this.player1.clearTint();
         if (this.fireSprite1.visible) this.fireSprite1.setPosition(this.player1.x + (this.player1.flipX ? -38 : 38), this.player1.y);
 
         //GESTION J2
         if (this.finished || !this.player2?.active) return;
-        const left2 = this.cursors.left.isDown;
-        const right2 = this.cursors.right.isDown;
-        const jump2 = this.cursors.up.isDown;
+        const left2 = this.keys2.left.isDown;
+        const right2 = this.keys2.right.isDown;
+        const jump2 = this.keys2.jump.isDown;
         if (left2) { this.player2.setVelocityX(-250); this.player2.setFlipX(true); }
         else if (right2) { this.player2.setVelocityX(250); this.player2.setFlipX(false); }
         else this.player2.setVelocityX(0);
@@ -292,11 +319,11 @@ export class Game extends Scene {
         if (!this.player2.body.blocked.down) this.player2.play('player-jump', true);
         else if (left2 || right2) this.player2.play('player-walk', true);
         else this.player2.play('player-idle', true);
-        if (this.time.now > this.invulnerableUntil) this.player2.clearTint();
+        if (this.time.now > this.invulnerableUntil2) this.player2.clearTint();
         if (this.fireSprite2.visible) this.fireSprite2.setPosition(this.player2.x + (this.player2.flipX ? -38 : 38), this.player2.y);
 
-        for (const bullet of this.player1Bullets.getChildren()) {
-            if (bullet.active && (!bullet.body || bullet.x < 0 || bullet.x > this.worldWidth || bullet.y > this.worldHeight || Math.abs(bullet.x - this.player1.x) > 1300)) bullet.destroy();
+        for (const bullet of [...this.player1Bullets.getChildren(), ...this.player2Bullets.getChildren()]) {
+            if (bullet.active && (!bullet.body || bullet.x < 0 || bullet.x > this.worldWidth || bullet.y < 0 || bullet.y > this.worldHeight)) bullet.destroy();
         }
     }
 }
